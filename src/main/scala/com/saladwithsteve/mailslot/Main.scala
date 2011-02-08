@@ -8,9 +8,9 @@ import org.apache.mina.transport.socket.SocketAcceptor
 import org.apache.mina.transport.socket.nio.{NioProcessor, NioSocketAcceptor}
 import java.net.InetSocketAddress
 import java.util.concurrent.{CountDownLatch, Executors, ExecutorService, TimeUnit}
-import scala.actors.{Actor, Scheduler}
-import scala.actors.Actor._
-import com.twitter.commons.Stats
+import com.twitter.actors.{Actor, Scheduler}
+import com.twitter.actors.Actor._
+import com.twitter.stats.Stats
 
 
 object MailSlot {
@@ -23,12 +23,13 @@ object MailSlot {
   var acceptor: SocketAcceptor = null
 
   def main(args: Array[String]) {
-    runtime.load(args)
+    //runtime.load(args)
+    Configgy.configure("config/test.conf")
     startup(Configgy.config)
   }
 
   def startup(config: Config) {
-    val listenAddress = config.getString("listen_host", "0.0.0.0")
+	val listenAddress = config.getString("listen_host", "0.0.0.0")
     val listenPort = config.getInt("listen_port", 10025)
 
     val maxThreads = config.getInt("max_threads", Runtime.getRuntime().availableProcessors * 2)

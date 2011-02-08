@@ -7,8 +7,8 @@ import net.lag.naggati.{IoHandlerActorAdapter, MinaMessage, ProtocolError}
 import org.apache.mina.core.buffer.IoBuffer
 import org.apache.mina.core.session.{IdleStatus, IoSession}
 import java.io.IOException
-import scala.actors.Actor
-import scala.actors.Actor._
+import com.twitter.actors.Actor
+import com.twitter.actors.Actor._
 import scala.collection.mutable
 
 /**

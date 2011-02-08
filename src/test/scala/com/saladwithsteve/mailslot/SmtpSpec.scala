@@ -22,12 +22,12 @@ object SmtpCodecSpec extends Specification {
 
   private var written: List[AnyRef] = Nil
 
-  private var decoder = smtp.Codec.decoder
+  private var decoder = Codec.decoder
 
   "smtp" should {
     doBefore {
       fakeSession = new DummySession
-      decoder = smtp.Codec.decoder
+      decoder = Codec.decoder
       written = Nil
     }
 

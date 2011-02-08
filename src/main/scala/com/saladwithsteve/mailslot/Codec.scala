@@ -51,7 +51,7 @@ object Codec {
   val encoder = new ProtocolEncoder {
     def encode(session: IoSession, message: AnyRef, out: ProtocolEncoderOutput) = {
       val buffer = message.asInstanceOf[Response].data
-      MailStats.bytesWritten.incr(buffer.remaining)
+      com.saladwithsteve.mailslot.MailStats.bytesWritten.incr(buffer.remaining)
       out.write(buffer)
     }
 
@@ -70,7 +70,7 @@ object Codec {
 
   val decoder = new Decoder(readLine(true, "ISO-8859-1") { line =>
 
-    val segments = line.split(" ")
+    val segments : Array[String] = line.split(" ")
     // Determine if we are seeing a MIME Header signifying an email body.
     if (segments(0).endsWith(":")) { // then we have a MIME header
       log.debug("attempting to process email body for line: %s in Thread %s", line, Thread.currentThread)
@@ -107,7 +107,7 @@ object Codec {
           case x if x.startsWith("from:") && x.length > 5 => {
             val pieces = x.split(":") // separate the email address from FROM:
             // FIXME: At some point, for my sanity, this needs to be a proper grammar.
-            state.out.write(Request((List("MAIL", "FROM:", pieces(1)) ::: segments.subArray(2, segments.length).toList), None))
+            state.out.write(Request((List("MAIL", "FROM:", pieces(1)) ::: segments.view.slice(2, segments.length).toList), None))
             End
           }
           case x => throw new ProtocolError("501 Syntax: MAIL FROM: <email_address>")
@@ -121,7 +121,7 @@ object Codec {
           case x if x.startsWith("to:") && x.length > 5 => {
             val pieces = x.split(":") // separate the email address from FROM:
             // FIXME: At some point, for my sanity, this needs to be a proper grammar.
-            state.out.write(Request((List("RCPT", "TO:", pieces(1)) ::: segments.subArray(2, segments.length).toList), None))
+            state.out.write(Request((List("RCPT", "TO:", pieces(1)) ::: segments.view.slice(2, segments.length).toList), None))
             End
           }
           case x => throw new ProtocolError("501 Syntax: RCPT TO: <email_address>")

@@ -1,8 +1,8 @@
 /** Copyright 2009 Steve Jenson under the Apache 2.0 License */
 package com.saladwithsteve.mailslot
 
-import com.twitter.commons.Stats.Counter
-import com.twitter.commons.Stats.Timing
+import com.twitter.stats.Stats.Counter
+import com.twitter.stats.Stats.Timing
 import java.util.concurrent.atomic.AtomicInteger
 
 object MailStats {
