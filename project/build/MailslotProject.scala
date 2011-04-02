@@ -12,7 +12,7 @@ class MailslotProject(info: ProjectInfo) extends DefaultProject(info) with Eclip
   val twitter_actors = "com.twitter" % "twitteractors_2.8.0" % "2.0.1"
   val mina = "org.apache.mina" % "mina-core" % "2.0.2"
   val naggati = "net.lag" % "naggati_2.8.0" % "0.7.4"
-  val configgy = "net.lag" % "configgy" % "2.0.2"
+  //val configgy = "net.lag" % "configgy" % "2.0.2"
   //val stats = "com.twitter" % "scala-stats_2.8.1" % "0.0.1-SNAPSHOT"
   val mail = "javax.mail" % "mail" % "1.4"
 
